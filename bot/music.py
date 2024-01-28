@@ -11,7 +11,7 @@ def create_cache():
         print("cache present")
 
 
-def getaudio():
+def get_audio():
     path = os.path.join(os.getcwd(), "cache")
 
     if len(os.listdir(path)) != 0:
@@ -32,7 +32,7 @@ def resetcache():
         print("File Deleted")
 
 
-def searchsong(name):
+def search_song(name):
     # Get search results
     result = YTMusic().search(query=name, filter="songs")
 
