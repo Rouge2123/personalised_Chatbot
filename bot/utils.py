@@ -15,7 +15,7 @@ welcome_message = ft.Row(
     alignment=ft.MainAxisAlignment.CENTER,
     controls=[
         ft.Container(
-            bgcolor=ft.colors.BLUE_400,
+            bgcolor=ft.colors.with_opacity(0.5, ft.colors.BLUE_500),
             border_radius=10,
             padding=15,
             width=470,
