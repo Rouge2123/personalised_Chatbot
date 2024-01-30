@@ -20,7 +20,7 @@ def main(page: ft.Page):
         """
         if page.theme_mode == ft.ThemeMode.DARK:
             page.theme_mode = ft.ThemeMode.LIGHT
-            page.appbar.bgcolor = ft.colors.with_opacity(0.5, ft.colors.YELLOW_700)
+            page.appbar.bgcolor = ft.colors.with_opacity(1, ft.colors.YELLOW_700)
             page.appbar.actions[0].icon = ft.icons.WB_SUNNY_OUTLINED
 
         else:
@@ -108,7 +108,7 @@ def main(page: ft.Page):
     )
 
     chat_input_field = ft.TextField(
-        label="Welche Musik möchtest du jetzt abspielen?",
+        label="Search a Song or an Artist", 
         expand=True,
         on_submit=handle_input_submit,
     )
