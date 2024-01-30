@@ -145,7 +145,7 @@ def main(page: ft.Page):
     )
 
     chat_input_field = ft.TextField(
-        label="Welche Musik möchtest du jetzt abspielen?",
+        label="Search a Song or an Artist", 
         expand=True,
         on_submit=handle_input_submit,
     )
