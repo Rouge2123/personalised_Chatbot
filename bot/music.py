@@ -21,7 +21,7 @@ def get_audio():
 
     else:
         print("No audio file found")
-        return "fake.mp4"
+        return "https://luan.xyz/files/audio/ambient_c_motion.mp3"
 
 
 def resetcache():
@@ -59,7 +59,7 @@ def dmusic(videoId):
     yt = YouTube(videourl)
 
     # Filter stream
-    stream = yt.streams.filter(only_audio=True, file_extension="webm").first()
+    stream = yt.streams.filter(only_audio=True, file_extension='mp4').first()
 
     # Download stream
     stream.download(output_path="cache/")
