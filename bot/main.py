@@ -1,6 +1,7 @@
 import flet as ft
 import music
-import utilsimport constants
+import utils
+import constants
 
 
 def main(page: ft.Page):
@@ -41,7 +42,7 @@ def main(page: ft.Page):
     def handle_input_submit(e):
         user_input = chat_input_field.value
 
-        if chat_input_field.value:  # check if input is not empty
+        if user_input:  # check if input is not empty
             chat_history.controls.append(utils.UserMessage(user_input))  # add input to chat history
             chat_input_field.value = ""
             page.update()
@@ -65,12 +66,13 @@ def main(page: ft.Page):
             song_control_id = id(e.control)
             # Release resources and clear cache
             song.release()
-            music.resetcache()
+            music.reset_cache()
 
             # Download via videoId, set the new song src
-            music.dmusic(e.control.data[2])
+            music.download_music(e.control.data[2])
             song.src = music.get_audio()
-
+            print(song.src)
+            page.update()
             song.play()
             e.control.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
 
@@ -78,12 +80,12 @@ def main(page: ft.Page):
 
     def check_status(e):
         nonlocal song_state
-        print(f"AudioStatus: {e.data}")
         song_state = e.data
+        print(f"AudioStatus: {song_state}")
 
     def track_progress(e):
-        print(
-            f"Position: {(int(e.data) / song.get_duration()) if song.get_duration() and song.get_duration() != 0 else 0}")
+        # print(f"Position: {(int(e.data) / song.get_duration()) if song.get_duration() and song.get_duration() != 0 else 0}")
+        pass
 
     def list_songs(search_term):
         all_songs = music.search_song(search_term)
@@ -135,8 +137,7 @@ def main(page: ft.Page):
 
     # Audio
     song = ft.Audio(
-        src="https://luan.xyz/files/audio/ambient_c_motion.mp3",
-        autoplay=False,
+        src=music.get_audio(),
         volume=1,
         balance=0,
         on_state_changed=check_status,
@@ -160,14 +161,17 @@ def main(page: ft.Page):
     )
 
     chat_history = ft.ListView(
-        controls=[utils.welcome_message(
-            constants.DARK_THEME_MODE_COLOR if page.theme_mode == ft.ThemeMode.DARK else constants.LIGHT_THEME_MODE_COLOR)],
+        controls=[
+            utils.welcome_message(
+                constants.DARK_THEME_MODE_COLOR if page.theme_mode == ft.ThemeMode.DARK else constants.LIGHT_THEME_MODE_COLOR)
+        ],
     )
 
     chat_input_field = ft.TextField(
         label="Search a Song or an Artist",
         expand=True,
         on_submit=handle_input_submit,
+        autofocus=True
     )
 
     page.add(
@@ -185,8 +189,6 @@ def main(page: ft.Page):
 
         )
     )
-    # chat_history.controls.append(utils.UserMessage("Tiakola"))
-    # list_songs("Tiakola")
 
 
-ft.app(target=main, assets_dir="cache")
+ft.app(target=main, assets_dir="cache", view=ft.AppView.WEB_BROWSER)

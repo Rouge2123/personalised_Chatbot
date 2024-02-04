@@ -4,32 +4,33 @@ import os
 
 
 def create_cache():
+    """Create cache directory if it doesn't exist."""
     try:
         os.makedirs("cache")
-        print("Created cache")
     except FileExistsError:
-        print("cache present")
+        pass
 
 
 def get_audio():
+    """
+    This function returns an audio file or URL. If there are files in the 'cache' directory,
+    it returns the first file found. If the 'cache' directory is empty, it returns the
+    default audio file URL.
+    """
     path = os.path.join(os.getcwd(), "cache")
 
     if len(os.listdir(path)) != 0:
         for file in os.listdir(path):
-            print("Found ", file)
             return file
-
     else:
-        print("No audio file found")
         return "https://luan.xyz/files/audio/ambient_c_motion.mp3"
 
 
-def resetcache():
-    # Delete audio dir
+def reset_cache():
+    """Delete/Remove all the files in the cache directory."""
     path = os.path.join(os.getcwd(), "cache")
     for file in os.listdir(path):
         os.remove(os.path.join(path, file))
-        print("File Deleted")
 
 
 def search_song(name):
@@ -53,14 +54,12 @@ def search_song(name):
     return songs_dict
 
 
-def dmusic(videoId):
-    # Store videoid
-    videourl = 'http://youtube.com/watch?v=' + str(videoId)
-    yt = YouTube(videourl)
+def download_music(video_id):
+    video_url = 'http://youtube.com/watch?v=' + str(video_id)
+    yt = YouTube(video_url)
 
-    # Filter stream
+    # search and get the first stream - with audio only
     stream = yt.streams.filter(only_audio=True, file_extension='mp4').first()
 
-    # Download stream
+    # Download and save music
     stream.download(output_path="cache/")
-    print("Music Downloaded")
