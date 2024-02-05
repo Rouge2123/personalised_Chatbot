@@ -32,11 +32,13 @@ def main(page: ft.Page):
             page.appbar.bgcolor = constants.LIGHT_THEME_MODE_COLOR
             page.appbar.actions[0].icon = ft.icons.WB_SUNNY_OUTLINED
             chat_history.controls[0].controls[0].bgcolor = constants.LIGHT_THEME_MODE_COLOR
+            send_button.bgcolor = constants.LIGHT_THEME_MODE_COLOR
         else:
             page.theme_mode = ft.ThemeMode.DARK
             page.appbar.bgcolor = constants.DARK_THEME_MODE_COLOR
             page.appbar.actions[0].icon = ft.icons.WB_SUNNY
             chat_history.controls[0].controls[0].bgcolor = constants.DARK_THEME_MODE_COLOR
+            send_button.bgcolor = constants.DARK_THEME_MODE_COLOR
         page.update()
 
     def handle_input_submit(e):
@@ -52,17 +54,21 @@ def main(page: ft.Page):
     def play_pause_song(e):
         nonlocal song_state, song_control_id
         if song_control_id == id(e.control):
-            if e.control.icon == ft.icons.PLAY_CIRCLE_ROUNDED:
-                e.control.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
+            if e.control.content.name == ft.icons.PLAY_CIRCLE_ROUNDED:
+                e.control.content.name = ft.icons.PAUSE_CIRCLE_ROUNDED
                 if song_state == "paused":
                     song.resume()
                 elif song_state in ["stopped", "completed", "disposed"]:
                     song.play()
-            elif e.control.icon == ft.icons.PAUSE_CIRCLE_ROUNDED:
-                e.control.icon = ft.icons.PLAY_CIRCLE_ROUNDED
+            elif e.control.content.name == ft.icons.PAUSE_CIRCLE_ROUNDED:
+                e.control.content.name = ft.icons.PLAY_CIRCLE_ROUNDED
                 song.pause()
 
         else:
+            e.control.content = ft.ProgressRing(value=None, stroke_width=2, width=20, height=20)
+            e.control.disabled = True
+            page.update()
+
             song_control_id = id(e.control)
             # Release resources and clear cache
             song.release()
@@ -71,17 +77,19 @@ def main(page: ft.Page):
             # Download via videoId, set the new song src
             music.download_music(e.control.data[2])
             song.src = music.get_audio()
-            print(song.src)
             page.update()
             song.play()
-            e.control.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
+
+            e.control.content = ft.Icon(ft.icons.PAUSE_CIRCLE_ROUNDED)
+            e.control.disabled = False
+            page.update()
 
         page.update()
 
     def check_status(e):
         nonlocal song_state
         song_state = e.data
-        print(f"AudioStatus: {song_state}")
+        print(f"AudioStatus: {song_state} {song.src}")
 
     def track_progress(e):
         # print(f"Position: {(int(e.data) / song.get_duration()) if song.get_duration() and song.get_duration() != 0 else 0}")
@@ -106,8 +114,7 @@ def main(page: ft.Page):
                     spacing=0,
                     controls=[
                         ft.IconButton(
-                            icon=ft.icons.PLAY_CIRCLE_ROUNDED,
-                            icon_size=30,
+                            content=ft.Icon(ft.icons.PLAY_CIRCLE_ROUNDED),
                             on_click=play_pause_song,
                             data=[s['name'], s['artists'], s['videoId'], s['duration']],
                         ),
@@ -146,18 +153,19 @@ def main(page: ft.Page):
 
     page.overlay.append(song)
 
+    bgcolor = ft.colors.with_opacity(0.5, ft.colors.YELLOW_700) if page.theme_mode == ft.ThemeMode.LIGHT else ft.colors.with_opacity(0.5, ft.colors.BLUE_700)
+
     page.appbar = ft.AppBar(
         title=ft.Text("Personalised Chatbot"),
         actions=[
             ft.IconButton(
                 icon=ft.icons.WB_SUNNY if page.theme_mode == ft.ThemeMode.DARK else ft.icons.WB_SUNNY_OUTLINED,
                 icon_size=30,
-                on_click=handle_theme_mode_change
+                on_click=handle_theme_mode_change,
+                tooltip="Switch Theme",
             )
         ],
-        bgcolor=ft.colors.with_opacity(0.5, ft.colors.YELLOW_700)
-        if page.theme_mode == ft.ThemeMode.LIGHT
-        else ft.colors.with_opacity(0.5, ft.colors.BLUE_700),
+        bgcolor=bgcolor,
     )
 
     chat_history = ft.ListView(
@@ -171,7 +179,10 @@ def main(page: ft.Page):
         label="Search a Song or an Artist",
         expand=True,
         on_submit=handle_input_submit,
-        autofocus=True
+        autofocus=True,
+        border_color=ft.colors.BLUE_700,
+        border_radius=ft.border_radius.all(15),
+
     )
 
     page.add(
@@ -181,14 +192,16 @@ def main(page: ft.Page):
             width=600,
 
         ),
-        ft.Row(
-            controls=[
-                chat_input_field,
-                ft.IconButton(ft.icons.SEND, icon_size=30, on_click=handle_input_submit),
-            ],
-
+        ft.Container(
+            padding=ft.Padding(10, 4, 10, 16),
+            content=ft.Row(
+                controls=[
+                    chat_input_field,
+                    send_button := ft.FloatingActionButton(icon=ft.icons.SEND, on_click=handle_input_submit, bgcolor=bgcolor),
+                ],
+            )
         )
     )
 
 
-ft.app(target=main, assets_dir="cache", view=ft.AppView.WEB_BROWSER)
+ft.app(target=main, assets_dir="cache")
