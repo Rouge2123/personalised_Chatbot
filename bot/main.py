@@ -27,15 +27,15 @@ def main(page: ft.Page):
         If the current theme mode is light, it switches to dark mode and updates the appbar color and icon.
         Finally, it updates the page to render the changes visually.
         """
-        if page.theme_mode == ft.ThemeMode.DARK:
+        if  page.theme_mode == ft.ThemeMode.DARK:
             page.theme_mode = ft.ThemeMode.LIGHT
             page.appbar.bgcolor = constants.LIGHT_THEME_MODE_COLOR
-            page.appbar.actions[0].icon = ft.icons.WB_SUNNY_OUTLINED
+            page.appbar.actions[1].icon = ft.icons.WB_SUNNY_OUTLINED
             chat_history.controls[0].controls[0].bgcolor = constants.LIGHT_THEME_MODE_COLOR
         else:
             page.theme_mode = ft.ThemeMode.DARK
             page.appbar.bgcolor = constants.DARK_THEME_MODE_COLOR
-            page.appbar.actions[0].icon = ft.icons.WB_SUNNY
+            page.appbar.actions[1].icon = ft.icons.WB_SUNNY
             chat_history.controls[0].controls[0].bgcolor = constants.DARK_THEME_MODE_COLOR
         page.update()
 
@@ -149,6 +149,11 @@ def main(page: ft.Page):
     page.appbar = ft.AppBar(
         title=ft.Text("Personalised Chatbot"),
         actions=[
+            ft.IconButton(
+                icon=ft.icons.INFO_OUTLINE,
+                icon_size=25,
+                tooltip="Envisioned by Flo, Henri and Roxy",
+            ),
             ft.IconButton(
                 icon=ft.icons.WB_SUNNY if page.theme_mode == ft.ThemeMode.DARK else ft.icons.WB_SUNNY_OUTLINED,
                 icon_size=30,
