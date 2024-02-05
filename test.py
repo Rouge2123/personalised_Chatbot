@@ -22,16 +22,7 @@ def main(page: ft.Page):
                 ft.IconButton(ft.icons.ADD, on_click=plus_click),
             ],
             alignment=ft.MainAxisAlignment.CENTER,
-        ),
-        ft.OutlinedButton(
-            content=ft.Container(
-                content=ft.Text(value="i", width=0),
-                margin=0,
-                padding=0,
-                ),
-            tooltip="Envisioned by Henri, Flo and Roxy",
-            width=55,
-            ),
-        ),
+        )
+    )
 
 ft.app(target=main, view = ft.AppView.WEB_BROWSER)
