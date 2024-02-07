@@ -162,6 +162,11 @@ def main(page: ft.Page):
                 icon=ft.icons.INFO_OUTLINE,
                 icon_size=25,
                 tooltip="Envisioned by Flo, Henri and Roxy",
+                controls=[
+                    utils.open_dlg()
+                ]
+              
+                        
             ),
             ft.IconButton(
                 icon=ft.icons.WB_SUNNY if page.theme_mode == ft.ThemeMode.DARK else ft.icons.WB_SUNNY_OUTLINED,
