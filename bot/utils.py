@@ -58,7 +58,18 @@ def welcome_message(bgcolor):
     )
 
 
+dlg = ft.AlertDialog(
+    title=ft.Text("Working!"), on_dismiss=lambda e: print("Dialog dismissed!"))
 
+def open_dlg(page: ft.Page,e):
+    page.dialog = dlg
+    dlg.open = True
+    page.update()
+
+
+##
+    
+   
     
 
 
