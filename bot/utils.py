@@ -1,3 +1,5 @@
+import os
+
 import flet as ft
 import constants
 
@@ -58,18 +60,18 @@ def welcome_message(bgcolor):
     )
 
 
-dlg = ft.AlertDialog(
-    title=ft.Text("Working!"), on_dismiss=lambda e: print("Dialog dismissed!"))
-
-def open_dlg(page: ft.Page,e):
-    page.dialog = dlg
-    dlg.open = True
-    page.update()
-
-
-##
-    
-   
-    
+def delete_file(file_name: str):
+    print(f"Request to delete {file_name}...")
+    if "http" not in file_name:
+        path = os.path.join(os.getcwd(), "cache")
+        for file in os.listdir(path):
+            if file_name.lower().split()[0] in file.lower():
+                print(f"Deleting {file}...")
+                os.remove(os.path.join(path, file))
+                return
 
 
+info_dialog = ft.AlertDialog(
+    title=ft.Text("Information"),
+    content=ft.Text("This bot was created for educational purposes and was envisioned by Flo, Henri and Roxy!"),
+)
