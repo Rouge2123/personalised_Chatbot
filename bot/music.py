@@ -11,7 +11,7 @@ def create_cache():
         pass
 
 
-def get_audio():
+def get_audio(file_name: str = None):
     """
     This function returns an audio file or URL. If there are files in the 'cache' directory,
     it returns the first file found. If the 'cache' directory is empty, it returns the
@@ -19,11 +19,14 @@ def get_audio():
     """
     path = os.path.join(os.getcwd(), "cache")
 
-    if len(os.listdir(path)) != 0:
-        for file in os.listdir(path):
-            return file
-    else:
+    if file_name is None:
+        print("get_audio: default")
         return "https://luan.xyz/files/audio/ambient_c_motion.mp3"
+    else:
+        for file in os.listdir(path):
+            if file_name.lower() in file.lower():
+                print(f"get_audio: {file}")
+                return file
 
 
 def reset_cache():
@@ -54,7 +57,7 @@ def search_song(name):
     return songs_dict
 
 
-def download_music(video_id):
+def download_music(video_id, file_name: str):
     video_url = 'http://youtube.com/watch?v=' + str(video_id)
     yt = YouTube(video_url)
 
@@ -62,4 +65,7 @@ def download_music(video_id):
     stream = yt.streams.filter(only_audio=True, file_extension='mp4').first()
 
     # Download and save music
-    stream.download(output_path="cache/")
+    stream.download(
+        output_path="cache/",
+        filename=f"{file_name}.mp4"
+    )
