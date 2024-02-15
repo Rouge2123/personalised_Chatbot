@@ -1,6 +1,3 @@
 # Personalised Chatbot
 
-- Framework
-- Benutzte programier Sprachen
-- Vorerfahrungen
-- Was wir gelernt haben
+With this chatbot one can currently search and play music from YouTube.
