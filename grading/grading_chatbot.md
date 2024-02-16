@@ -122,7 +122,8 @@ Henri: Habe bei der Flet-Installation geholfen
 <!-- Pro Gruppe:You have critiqued another group project. Link to your critique here (another wiki page on your git) and link the project in the critique, use these evaluation criteria to critique the other project. Make sure they get a top grade after making the suggested changes -->
 
 Ja - Link: https://github.com/laraanastasia/Phylia
-[Grading Criteria from other group](grading_pylia.md)
+
+- [Grading Criteria from other group](grading_pylia.md)
 
 # Sie können sich selbstständig in Entwicklungsumgebungen und Technologien einarbeiten und diese zur Programmierung und Fehlerbehebung einsetzen. (10)
 
