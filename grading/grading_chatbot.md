@@ -80,7 +80,7 @@ def download_music(video_id, file_name: str):
 
 # Sie können ein größeres Programm selbständig entwerfen, programmieren und auf Funktionsfähigkeit testen (Das Projekt im Team) (10)
 
-![Contributors from GIT insights](git_contributors.png)
+![Contributors from GIT insights](git_contributers.png)
 Der Großteil wurde zusammen in Präsenz programmiert und besprochen.
 
 # Sie kennen verschiedene Datenstrukturen und können diese exemplarisch anwenden. (10 Punkte)
