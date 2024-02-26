@@ -80,7 +80,7 @@ def download_music(video_id, file_name: str):
 
 # Sie können ein größeres Programm selbständig entwerfen, programmieren und auf Funktionsfähigkeit testen (Das Projekt im Team) (10)
 
-![Contributors from GIT insights](git_contributers.png)
+![Contributors from GIT insights](/grading/git_contributers.png)
 Der Großteil wurde zusammen in Präsenz programmiert und besprochen.
 
 # Sie kennen verschiedene Datenstrukturen und können diese exemplarisch anwenden. (10 Punkte)
@@ -104,7 +104,7 @@ Der Großteil wurde zusammen in Präsenz programmiert und besprochen.
   2/3 haben VSC für das Projekt benutzt
 
 - Copilot
-  ![Copilot beweis](Copilot.png)
+  ![Copilot beweis](/grading/Copilot.png)
 
 - other
   1/3 hat PyCharm als IDE benutzt
@@ -123,7 +123,7 @@ Henri: Habe bei der Flet-Installation geholfen
 
 Ja - Link: https://github.com/laraanastasia/Phylia
 
-- [Grading Criteria from other group](grading_pylia.md)
+- [Grading Criteria from other group](/Review-GradingCriteria.md)
 
 # Sie können sich selbstständig in Entwicklungsumgebungen und Technologien einarbeiten und diese zur Programmierung und Fehlerbehebung einsetzen. (10)
 
